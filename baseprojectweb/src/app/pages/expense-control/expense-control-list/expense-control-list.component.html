@@ -1,0 +1,123 @@
+<div class="list">
+  <app-bread-crumb [items]="[{ text: 'Expense Control' }]"></app-bread-crumb>
+
+  <app-page-header
+    page-title="Expense Control"
+    button-text="New"
+    [button-fa]="['fas', 'plus']"
+    button-link="new"
+    button-class="btn-success"
+  ></app-page-header>
+  <div class="card">
+    <div class="card-header">Expense Control Filter</div>
+
+    <div class="card-body">
+      <div class="row">
+        <div class="form-group col-md-3">
+          <label for="description">Description</label>
+          <input
+            type="text"
+            class="form-control"
+            id="description"
+            [(ngModel)]="description"
+          />
+        </div>
+        <div class="form-group col-md-3">
+          <label for="name">Person Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="name"
+            [(ngModel)]="name"
+          />
+        </div>
+        <div class="form-group col-md-3">
+          <label for="email">Person E-mail</label>
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            [(ngModel)]="email"
+          />
+        </div>
+        <div class="form-group col-md-3 button-search">
+          <button
+            id="search"
+            type="button"
+            class="btn btn-primary btn-sm botoes"
+            (click)="filter()"
+          >
+            <fa-icon [icon]="['fas', 'search']"></fa-icon> Search
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid tableskindiv">
+    <div class="actions actions-header">
+      <button
+        (click)="downloadReportPdf()"
+        class="btn btn-danger btn-sm botoes"
+      >
+        <fa-icon [icon]="['fas', 'file-pdf']"></fa-icon> PDF
+      </button>
+    </div>
+    <table class="tableskin">
+      <thead>
+        <tr class="bg-primary text-light">
+          <th>Person</th>
+          <th>Description</th>
+          <th>Expense Date</th>
+          <th>Value</th>
+          <th class="actions">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let expenseControl of resources">
+          <td>{{ expenseControl.person.name }}</td>
+          <td>{{ expenseControl.description }}</td>
+          <td>{{ expenseControl.dateExpense | date: "dd/MM/yyyy" }}</td>
+          <td
+            [ngClass]="{
+              expense: expenseControl.expense.description === 'Expense',
+              revenue: expenseControl.expense.description === 'Revenue'
+            }"
+          >
+            {{ expenseControl.value | currency: "BRL":true }}
+          </td>
+
+          <td class="actions">
+            <button
+              type="button"
+              class="btn btn-primary btn-sm botoes"
+              data-bs-toggle="modal"
+              data-bs-target="#detail"
+              (click)="selectExpenseControl(expenseControl)"
+            >
+              <fa-icon [icon]="['fas', 'search']"></fa-icon> Detail
+            </button>
+            <a
+              [routerLink]="[expenseControl.id, 'edit']"
+              class="btn btn-secondary btn-sm botoes"
+              ><fa-icon [icon]="['fas', 'edit']"></fa-icon> Edit</a
+            >
+            <button
+              (click)="deleteResource(expenseControl)"
+              class="btn btn-danger btn-sm botoes"
+            >
+              <fa-icon [icon]="['fas', 'trash']"></fa-icon> Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p-paginator
+      [rows]="size"
+      [totalRecords]="totalElementos"
+      (onPageChange)="paginate($event)"
+    ></p-paginator>
+  </div>
+  <app-expense-control-detail
+    [expenseControlSelected]="expenseControlSelected"
+  ></app-expense-control-detail>
+</div>

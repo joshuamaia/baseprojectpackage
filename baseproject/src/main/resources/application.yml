@@ -1,0 +1,26 @@
+server:
+  port: 8080
+spring:
+  # Database
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:baseapi}
+    username: ${DB_USER:postgres}
+    password: ${DB_PASSWORD:root}
+  # Flyway
+  flyway:
+    enabled: true
+  # JPA properties
+#  jpa:
+#    hibernate:
+#      ddl-auto: update
+management:
+  endpoint:
+    health:
+      show-details: always
+  health:
+    db:
+      enabled: 'true'
+    defaults:
+      enabled: 'true'
+

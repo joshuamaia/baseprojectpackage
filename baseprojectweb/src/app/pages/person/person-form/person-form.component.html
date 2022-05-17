@@ -1,0 +1,145 @@
+<div class="formcss">
+  <app-bread-crumb
+    [items]="[{ text: 'Persons', link: '/persons' }, { text: pageTitle }]"
+  ></app-bread-crumb>
+
+  <app-page-header
+    [page-title]="pageTitle"
+    button-text="Back"
+    [button-fa]="['fas', 'backward']"
+    button-link="/persons"
+    button-class="btn-primary"
+  ></app-page-header>
+
+  <form [formGroup]="resourceForm" (submit)="submitForm()">
+    <div class="card">
+      <div class="card-header">Person Informations</div>
+
+      <div class="card-body">
+        <div class="row">
+          <div class="form-group col-md-6">
+            <label for="name">Name</label>
+            <input
+              type="text"
+              class="form-control"
+              id="name"
+              formControlName="name"
+            />
+            <app-form-field-error
+              [form-control]="resourceForm?.get('name')"
+            ></app-form-field-error>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="email">E-mail</label>
+            <input
+              type="email"
+              class="form-control"
+              id="email"
+              formControlName="email"
+            />
+            <app-form-field-error
+              [form-control]="resourceForm?.get('email')"
+            ></app-form-field-error>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="form-group col-md-6">
+            <label for="gender">Gender</label>
+            <ng-select
+              id="gender"
+              [items]="genders"
+              class="NgSelect"
+              formControlName="gender"
+              labelForId="input-tipo"
+              appearance="outline"
+              [searchable]="true"
+            >
+              <ng-template ng-label-tmp let-item="item">
+                {{ item.description }}
+              </ng-template>
+              <ng-template
+                ng-option-tmp
+                let-item="item"
+                let-index="index"
+                let-search="searchTerm"
+              >
+                {{ item.description }}
+              </ng-template>
+            </ng-select>
+            <app-form-field-error
+              [form-control]="resourceForm?.get('gender')"
+            ></app-form-field-error>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="birthdate">Birth Date</label>
+            <input
+              type="date"
+              class="form-control"
+              id="birthDate"
+              formControlName="birthDate"
+              [max]="maxBirthDate()"
+            />
+            <app-form-field-error
+              [form-control]="resourceForm?.get('birthDate')"
+            ></app-form-field-error>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">Address Informations</div>
+
+      <div class="card-body" formGroupName="address">
+        <div class="row">
+          <div class="form-group col-md-4">
+            <label for="street">Street</label>
+            <input
+              type="text"
+              class="form-control"
+              id="street"
+              formControlName="street"
+            />
+            <app-form-field-error
+              [form-control]="resourceForm?.get('address')?.get('street')"
+            ></app-form-field-error>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="district">District</label>
+            <input
+              type="text"
+              class="form-control"
+              id="district"
+              formControlName="district"
+            />
+            <app-form-field-error
+              [form-control]="resourceForm?.get('address')?.get('district')"
+            ></app-form-field-error>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="number">Number</label>
+            <input
+              type="number"
+              class="form-control"
+              id="number"
+              formControlName="number"
+            />
+            <app-form-field-error
+              [form-control]="resourceForm?.get('address')?.get('number')"
+            ></app-form-field-error>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="button-save">
+      <button
+        [disabled]="submittingForm || resourceForm.invalid"
+        type="submit"
+        class="btn btn-primary btn-lg float-right mt-3"
+      >
+        <fa-icon [icon]="['fas', 'save']"></fa-icon> Salvar
+      </button>
+    </div>
+  </form>
+</div>

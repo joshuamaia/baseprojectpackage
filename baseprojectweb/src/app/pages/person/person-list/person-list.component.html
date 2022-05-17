@@ -1,0 +1,110 @@
+<div class="list">
+  <app-bread-crumb [items]="[{ text: 'Persons' }]"></app-bread-crumb>
+
+  <app-page-header
+    page-title="Persons"
+    button-text="New"
+    [button-fa]="['fas', 'plus']"
+    button-link="new"
+    button-class="btn-success"
+  ></app-page-header>
+
+  <div class="card">
+    <div class="card-header">Person Filter</div>
+
+    <div class="card-body">
+      <div class="row">
+        <div class="form-group col-md-5">
+          <label for="name">Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="name"
+            [(ngModel)]="name"
+          />
+        </div>
+        <div class="form-group col-md-5">
+          <label for="email">E-mail</label>
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            [(ngModel)]="email"
+          />
+        </div>
+        <div class="form-group col-md-2 button-search">
+          <button
+            id="search"
+            type="button"
+            class="btn btn-primary btn-sm botoes"
+            (click)="filter()"
+          >
+            <fa-icon [icon]="['fas', 'search']"></fa-icon> Search
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid tableskindiv">
+    <div class="actions actions-header">
+      <button
+        (click)="downloadReportCsv()"
+        class="btn btn-success btn-sm botoes"
+      >
+        <fa-icon [icon]="['fas', 'file-csv']"></fa-icon> CSV
+      </button>
+      <button
+        (click)="downloadReportPdf()"
+        class="btn btn-danger btn-sm botoes"
+      >
+        <fa-icon [icon]="['fas', 'file-pdf']"></fa-icon> PDF
+      </button>
+    </div>
+    <table class="tableskin">
+      <thead>
+        <tr class="bg-primary text-light">
+          <th>Name</th>
+          <th>E-mail</th>
+          <th>Birth Date</th>
+          <th class="actions">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let person of resources">
+          <td>{{ person.name }}</td>
+          <td>{{ person.email }}</td>
+          <td>{{ person.birthDate | date: "dd/MM/yyyy" }}</td>
+
+          <td class="actions">
+            <button
+              type="button"
+              class="btn btn-primary btn-sm botoes"
+              data-bs-toggle="modal"
+              data-bs-target="#detail"
+              (click)="selectPerson(person)"
+            >
+              <fa-icon [icon]="['fas', 'search']"></fa-icon> Detail
+            </button>
+            <a
+              [routerLink]="[person.id, 'edit']"
+              class="btn btn-secondary btn-sm botoes"
+              ><fa-icon [icon]="['fas', 'edit']"></fa-icon> Edit</a
+            >
+            <button
+              (click)="deleteResource(person)"
+              class="btn btn-danger btn-sm botoes"
+            >
+              <fa-icon [icon]="['fas', 'trash']"></fa-icon> Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p-paginator
+      [rows]="size"
+      [totalRecords]="totalElementos"
+      (onPageChange)="paginate($event)"
+    ></p-paginator>
+  </div>
+  <app-person-detail [personSelected]="personSelected"></app-person-detail>
+</div>
