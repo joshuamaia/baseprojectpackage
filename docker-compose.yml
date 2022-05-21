@@ -1,5 +1,13 @@
 version: "3"
-services: 
+services:
+  zipkin:
+    image: openzipkin/zipkin
+    container_name: zipkin
+    ports:
+      - 9411:9411
+    networks:
+      - baseproject-network
+
   baseproject-db:
     image: postgres:11
     container_name: baseproject-db
@@ -14,10 +22,11 @@ services:
       - 5433:5432
 
   baseproject-api:
-    build: './baseproject'
+    build: "./baseproject"
     container_name: baseproject
     depends_on:
       - baseproject-db
+      - zipkin
     networks:
       - baseproject-network
     environment:

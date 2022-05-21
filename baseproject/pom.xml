@@ -12,12 +12,34 @@
 	<groupId>br.com.joshua</groupId>
 	<artifactId>baseproject</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>baseproject</name>
 	<description>Base Project Spring</description>
 	<properties>
 		<jasperreports.version>6.16.0</jasperreports.version>
 		<java.version>17</java.version>
+		<spring.cloud.version>2021.0.0</spring.cloud.version>
+		<spring.boot.dependencies.version>2.6.4</spring.boot.dependencies.version>
 	</properties>
+	   <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring.boot.dependencies.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring.cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+        </dependencies>
+
+    </dependencyManagement>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -36,6 +58,16 @@
 		<dependency>
 			<groupId>org.flywaydb</groupId>
 			<artifactId>flyway-core</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-sleuth</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-sleuth-zipkin</artifactId>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-ui -->
