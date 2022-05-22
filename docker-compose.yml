@@ -3,10 +3,10 @@ services:
   zipkin:
     image: openzipkin/zipkin
     container_name: zipkin
-    ports:
-      - 9411:9411
     networks:
       - baseproject-network
+    ports:
+      - 9411:9411
 
   baseproject-db:
     image: postgres:11
@@ -31,6 +31,8 @@ services:
       - baseproject-network
     environment:
       - PORT=8080
+      - SPRING_APPLICATION_NAME=microservice-baseproject
+      - SPRING_ZIPKIN_BASE_URL=http://zipkin:9411/
       - DB_HOST=baseproject-db
       - DB_NAME=baseproject
       - DB_USER=postgres
