@@ -27,24 +27,45 @@ input[type="date"]::-webkit-inner-spin-button {
   padding: 20px;
   box-shadow: 0px 5px 8px 0px rgb(0 0 0 / 15%);
   border-radius: 8px;
+
+  .actions {
+    text-align: end;
+  }
+
+  .actions-header {
+    padding: 10px;
+    background: #fff;
+  }
+
+  .button-search {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .botoes {
+    margin-left: 4px;
+    margin-right: 4px;
+  }
 }
 
 .tableskin {
   width: 100%;
-}
-thead {
-  background-color: rgba($color: #3f51b5, $alpha: 0.4);
-}
-th {
-  padding: 10px !important;
-}
-tbody {
-  background-color: rgba($color: #3f51b5, $alpha: 0.07);
-}
-td {
-  padding: 15px;
-  text-align: left;
-}
-tbody tr:nth-child(even) {
-  background-color: rgba($color: #3f51b5, $alpha: 0.12);
+
+  thead {
+    background-color: rgba($color: #3f51b5, $alpha: 0.4);
+  }
+  th {
+    padding: 10px !important;
+  }
+  tbody {
+    background-color: rgba($color: #3f51b5, $alpha: 0.07);
+  }
+  td {
+    padding: 15px;
+    text-align: left;
+  }
+  tbody tr:nth-child(even) {
+    background-color: rgba($color: #3f51b5, $alpha: 0.12);
+  }
 }

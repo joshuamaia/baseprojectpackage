@@ -19,6 +19,10 @@ const routes: Routes = [
         (m) => m.ExpenseControlModule
       ),
   },
+  {
+    path: '**',
+    redirectTo: '',
+  },
 ];
 
 @NgModule({
