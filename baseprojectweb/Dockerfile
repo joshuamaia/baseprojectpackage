@@ -1,9 +1,16 @@
 FROM node
-WORKDIR /app
-COPY package.json ./
+
+WORKDIR /usr/src/app
+ 
+ENV PATH /usr/src/app/node_modules/.bin:$PATH
+
+COPY ["package.json", "package-lock.json", "./"]
+
 RUN npm install -g @angular/cli
-RUN npm install @angular/cdk
-RUN npm install
+RUN npm install --legacy-peer-deps
+
 COPY . .
-EXPOSE 4200
-CMD npm run start
+ 
+CMD ng serve --host 0.0.0.0
+
+EXPOSE 4200/tcp

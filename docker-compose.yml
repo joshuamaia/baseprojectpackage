@@ -41,6 +41,16 @@ services:
     ports:
       - 8080:8080
 
+  baseproject-web:
+    container_name: baseprojectweb
+    depends_on:
+      - baseproject-api
+    networks:
+      - baseproject-network
+    build: "./baseprojectweb"
+    ports:
+      - "4200:4200"
+
 networks:
   baseproject-network:
     driver: bridge
