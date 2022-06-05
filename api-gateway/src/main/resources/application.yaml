@@ -14,7 +14,7 @@ spring:
         - id: microservice-baseproject
           uri: lb://MICROSERVICE-BASEPROJECT
           predicates:
-            - Path=/api/**
+            - Path=/api/expense-controls/**, /api/enums/**, /api/persons/**, /api/reports/**
 
 eureka:
   client:
