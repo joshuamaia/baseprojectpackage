@@ -32,7 +32,6 @@ import br.com.joshua.baseproject.repository.ExpenseControlRepository;
 import br.com.joshua.baseproject.request.ExpenseControlRequest;
 import br.com.joshua.baseproject.response.ExpenseControlResponse;
 import br.com.joshua.baseproject.response.ExpenseSumResponse;
-import br.com.joshua.baseproject.response.PersonResponse;
 import br.com.joshua.baseproject.service.ExpenseControlService;
 
 @SpringBootTest
