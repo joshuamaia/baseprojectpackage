@@ -21,7 +21,7 @@ export class ExpenseControlService extends BaseResourceService<ExpenseControl> {
   }
 
   getExpenses(): Observable<Expense[]> {
-    const url = `${UtilService.BASE_URL}/enums/expense`;
+    const url = `${UtilService.BASE_URL}/expense-enums/expense`;
 
     return this.http.get<Expense[]>(url);
   }

@@ -60,7 +60,7 @@ export class PersonListComponent
 
   downloadReportPdf() {
     this.downloadService
-      .downloadReportPdf('person_report')
+      .downloadReportPdfPerson('person_report')
       .subscribe((response) => {
         this.downloadService.downloadFile(
           response,
@@ -70,7 +70,7 @@ export class PersonListComponent
       });
   }
   downloadReportCsv() {
-    this.downloadService.downloadReportCsv().subscribe((response) => {
+    this.downloadService.downloadReportCsvPerson().subscribe((response) => {
       this.downloadService.downloadFile(response, 'person.csv', 'text/csv');
     });
   }

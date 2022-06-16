@@ -73,7 +73,7 @@ export class ExpenseControlListComponent
 
   downloadReportPdf() {
     this.downloadService
-      .downloadReportPdf('expense_report')
+      .downloadReportPdfExpense('expense_report')
       .subscribe((response) => {
         this.downloadService.downloadFile(
           response,

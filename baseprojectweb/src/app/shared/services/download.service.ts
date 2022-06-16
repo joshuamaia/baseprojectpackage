@@ -14,7 +14,7 @@ export class DownloadService {
   protected apiPath: string;
 
   constructor(protected injector: Injector) {
-    this.apiPath = `${UtilService.BASE_URL}/reports`;
+    this.apiPath = `${UtilService.BASE_URL}`;
     this.http = injector.get(HttpClient);
   }
 
@@ -25,23 +25,34 @@ export class DownloadService {
     saveAs(blob, filename);
   }
 
-  downloadReportPdf(nameReport: string): Observable<any> {
+  downloadReportPdfExpense(nameReport: string): Observable<any> {
     let headers = new HttpHeaders();
 
     headers = headers.set('Accept', 'application/pdf');
 
-    return this.http.get(`${this.apiPath}/pdf/${nameReport}`, {
+    return this.http.get(`${this.apiPath}/expense-reports/pdf/${nameReport}`, {
       headers: headers,
       responseType: 'blob',
     });
   }
 
-  downloadReportCsv(): Observable<any> {
+  downloadReportPdfPerson(nameReport: string): Observable<any> {
+    let headers = new HttpHeaders();
+
+    headers = headers.set('Accept', 'application/pdf');
+
+    return this.http.get(`${this.apiPath}/person-reports/pdf/${nameReport}`, {
+      headers: headers,
+      responseType: 'blob',
+    });
+  }
+
+  downloadReportCsvPerson(): Observable<any> {
     let headers = new HttpHeaders();
 
     headers = headers.set('Accept', 'text/plain');
 
-    return this.http.get(`${this.apiPath}/csv`, {
+    return this.http.get(`${this.apiPath}/person-reports/csv`, {
       headers: headers,
       responseType: 'blob',
     });

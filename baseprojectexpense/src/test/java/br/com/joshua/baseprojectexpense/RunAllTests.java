@@ -1,12 +1,12 @@
-package br.com.joshua.baseproject;
+package br.com.joshua.baseprojectexpense;
 
 import org.junit.platform.suite.api.SelectClasses;
 import org.junit.platform.suite.api.Suite;
 
 @Suite
 @SelectClasses({
-            PersonTests.class,
-            PersonControllerTest.class,
+            ExpenseControlTests.class,
+            ExpenseControllerTest.class
 })
 public class RunAllTests {
 
