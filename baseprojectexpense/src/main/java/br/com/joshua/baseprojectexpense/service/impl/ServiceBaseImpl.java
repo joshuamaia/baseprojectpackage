@@ -25,7 +25,8 @@ public abstract class ServiceBaseImpl<Res, T extends RequestBase<ID>, ID extends
 	
 	@Override
 	public Res save(T request) {
-		return convertFromResponse(repository.save(convertFromEntity(request)));
+		E entity = convertFromEntity(request);
+		return convertFromResponse(repository.save(entity));
 	}
 	
 	@Override

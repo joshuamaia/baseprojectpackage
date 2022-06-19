@@ -1,6 +1,11 @@
 server:
   port: ${PORT:8080}
 spring:
+  jackson:
+    serialization:
+      WRITE_DATES_AS_TIMESTAMPS: false
+  main:
+    allow-bean-definition-overriding: true
   application:
     name: ${SPRING_APPLICATION_NAME:microservice-baseproject}
   # zipkin
@@ -13,6 +18,11 @@ spring:
     url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:baseapi}
     username: ${DB_USER:postgres}
     password: ${DB_PASSWORD:root}
+  rabbitmq:
+    host: ${RABBIT_MQ_HOST:localhost}
+    port: ${RABBIT_MQ_PORT:5672}
+    username: ${RABBIT_MQ_USER:guest}
+    password: ${RABBIT_MQ_PASSWORD:guest}
   # Flyway
   flyway:
     enabled: true
@@ -36,4 +46,18 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
     enabled: true
+    
+app-config:
+  rabbit:
+    exchange:
+      baseproject: person.topic
 
+    routingKey:
+      person-create: person-create.routingKey
+      person-update: person-update.routingKey
+      person-delete: person-delete.routingKey
+
+    queue:
+      person-create: person-create.queue
+      person-update: person-update.queue
+      person-delete: person-delete.queue

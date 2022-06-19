@@ -2,6 +2,12 @@ package br.com.joshua.baseprojectexpense.response;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+
 import br.com.joshua.baseprojectexpense.enums.GenderEnum;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
@@ -25,6 +31,9 @@ public class PersonResponse extends ResponseBase<Long> {
 
 	String email;
 
+	@JsonSerialize(using = LocalDateSerializer.class)
+	@JsonDeserialize(using = LocalDateDeserializer.class)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	LocalDate birthDate;
 
 	GenderEnum gender;

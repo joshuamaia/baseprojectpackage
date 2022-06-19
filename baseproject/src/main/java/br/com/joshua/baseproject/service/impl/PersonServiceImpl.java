@@ -4,12 +4,18 @@ import java.util.Optional;
 
 import javax.validation.constraints.NotNull;
 
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.com.joshua.baseproject.domain.Person;
 import br.com.joshua.baseproject.repository.PersonRepository;
@@ -17,10 +23,77 @@ import br.com.joshua.baseproject.repository.specification.PersonSpecification;
 import br.com.joshua.baseproject.request.PersonRequest;
 import br.com.joshua.baseproject.response.PersonResponse;
 import br.com.joshua.baseproject.service.PersonService;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
+@Slf4j
 public class PersonServiceImpl extends ServiceBaseImpl<PersonResponse, PersonRequest, Long, Person, PersonRepository>
 		implements PersonService {
+
+	@Autowired
+	private RabbitTemplate rabbitTemplate;
+
+	@Value("${app-config.rabbit.exchange.baseproject}")
+	private String personTopicExchange;
+
+	@Value("${app-config.rabbit.routingKey.person-create}")
+	private String personCreateKey;
+
+	@Value("${app-config.rabbit.routingKey.person-update}")
+	private String personUpdateKey;
+
+	@Value("${app-config.rabbit.routingKey.person-delete}")
+	private String personDeleteKey;
+
+	@Override
+	@Transactional
+	public PersonResponse save(PersonRequest request) {
+		PersonResponse toReturn = super.save(request);
+
+		try {
+			log.info("Sending message: {}", new ObjectMapper().writeValueAsString(request));
+			request.setId(toReturn.getId());
+			request.getAddress().setId(toReturn.getAddress().getId());
+			rabbitTemplate.convertAndSend(personTopicExchange, personCreateKey, request);
+			log.info("Message was sent successfully!");
+		} catch (Exception ex) {
+			log.info("Error while trying to send create confirmation message: ", ex);
+			throw new RuntimeException(ex);
+		}
+
+		return toReturn;
+	}
+	
+	@Override
+	@Transactional
+	public PersonResponse update(PersonRequest request) {
+		PersonResponse toReturn = super.update(request);
+
+		try {
+			log.info("Sending message: {}", new ObjectMapper().writeValueAsString(request));
+			rabbitTemplate.convertAndSend(personTopicExchange, personUpdateKey, request);
+			log.info("Message was sent successfully!");
+		} catch (Exception ex) {
+			log.info("Error while trying to send update confirmation message: ", ex);
+			throw new RuntimeException(ex);
+		}
+
+		return toReturn;
+	}
+	
+	@Override
+	@Transactional
+	public void delete(Long id) {
+		super.delete(id);
+		try {
+			log.info("Sending message: {}", new ObjectMapper().writeValueAsString(id));
+			rabbitTemplate.convertAndSend(personTopicExchange, personDeleteKey, id);
+			log.info("Message was sent successfully!");
+		} catch (Exception ex) {
+			log.info("Error while trying to send delete confirmation message: ", ex);
+			throw new RuntimeException(ex);
+		}
+	}
 
 	@Override
 	public Page<PersonResponse> searchAllPage(Integer page, Integer size, String wordSearch) {
