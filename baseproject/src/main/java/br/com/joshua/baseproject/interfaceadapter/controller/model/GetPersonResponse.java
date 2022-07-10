@@ -1,4 +1,4 @@
-package br.com.joshua.baseproject.domain;
+package br.com.joshua.baseproject.interfaceadapter.controller.model;
 
 import java.time.LocalDate;
 
@@ -23,7 +23,7 @@ import lombok.experimental.FieldDefaults;
 @EqualsAndHashCode(callSuper = false)
 @ToString
 @FieldDefaults(level = AccessLevel.PROTECTED)
-public class Person extends DomainBase<Long> {
+public class GetPersonResponse extends DomainBase<Long> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -38,6 +38,6 @@ public class Person extends DomainBase<Long> {
 
 	GenderEnum gender;
 
-	Address address;
+	GetAddressResponse address;
 
 }

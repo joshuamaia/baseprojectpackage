@@ -1,6 +1,9 @@
 package br.com.joshua.baseproject.domain;
 
+import java.io.Serializable;
+
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,18 +13,14 @@ import lombok.experimental.FieldDefaults;
 
 @Getter
 @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @ToString
 @FieldDefaults(level = AccessLevel.PROTECTED)
-public class Address extends DomainBase<Long> {
+public abstract class DomainBase<ID extends Number> implements Serializable {
 
-	private static final long serialVersionUID = 1L;
-
-	String street;
-
-	String district;
-
-	Integer number;
+	private static final long serialVersionUID = -6964701705299216524L;
+	ID id;
 
 }

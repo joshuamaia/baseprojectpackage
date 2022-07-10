@@ -1,4 +1,4 @@
-package br.com.joshua.baseproject.domain;
+package br.com.joshua.baseproject.interfaceadapter.controller.model;
 
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
@@ -14,7 +14,7 @@ import lombok.experimental.FieldDefaults;
 @EqualsAndHashCode(callSuper = false)
 @ToString
 @FieldDefaults(level = AccessLevel.PROTECTED)
-public class Address extends DomainBase<Long> {
+public class GetAddressResponse extends DomainBase<Long> {
 
 	private static final long serialVersionUID = 1L;
 
