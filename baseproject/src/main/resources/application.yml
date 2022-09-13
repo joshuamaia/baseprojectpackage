@@ -56,8 +56,10 @@ app-config:
       person-create: person-create.routingKey
       person-update: person-update.routingKey
       person-delete: person-delete.routingKey
+      start: start.routingKey
 
     queue:
       person-create: person-create.queue
       person-update: person-update.queue
       person-delete: person-delete.queue
+      start: start.queue

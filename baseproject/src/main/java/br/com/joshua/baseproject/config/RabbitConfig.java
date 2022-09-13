@@ -33,6 +33,9 @@ public class RabbitConfig {
 
 	@Value("${app-config.rabbit.queue.person-delete}")
 	private String personDeleteMq;
+	
+	@Value("${app-config.rabbit.queue.start}")
+	private String startMq;
 
 	@Bean
 	public TopicExchange personTopicExchange() {
@@ -52,6 +55,11 @@ public class RabbitConfig {
 	@Bean
 	public Queue personDeleteMq() {
 		return new Queue(personDeleteMq, true);
+	}
+	
+	@Bean
+	public Queue startMq() {
+		return new Queue(startMq, true);
 	}
 
 	@Bean

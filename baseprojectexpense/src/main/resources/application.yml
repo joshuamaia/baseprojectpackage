@@ -51,4 +51,5 @@ app-config:
       person-create: person-create.queue
       person-update: person-update.queue
       person-delete: person-delete.queue
+      start: start.queue
 
