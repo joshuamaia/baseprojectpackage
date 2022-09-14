@@ -24,6 +24,9 @@ public class RabbitConfig {
 
 	@Value("${app-config.rabbit.routingKey.person-delete}")
 	private String personDeleteKey;
+	
+	@Value("${app-config.rabbit.routingKey.start}")
+	private String startKey;
 
 	@Value("${app-config.rabbit.queue.person-create}")
 	private String personCreateMq;
@@ -75,6 +78,11 @@ public class RabbitConfig {
 	@Bean
 	public Binding personDeleteMqBinding(TopicExchange topicExchange) {
 		return BindingBuilder.bind(personDeleteMq()).to(topicExchange).with(personDeleteKey);
+	}
+	
+	@Bean
+	public Binding starteMqBinding(TopicExchange topicExchange) {
+		return BindingBuilder.bind(startMq()).to(topicExchange).with(startKey);
 	}
 
 	@Bean
