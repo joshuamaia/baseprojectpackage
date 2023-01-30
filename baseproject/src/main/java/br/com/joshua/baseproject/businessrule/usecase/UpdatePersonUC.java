@@ -37,6 +37,9 @@ public class UpdatePersonUC implements UpdatePerson {
 
 	@Value("${app-config.rabbit.routingKey.person-update}")
 	private String personUpdateKey;
+	
+	@Autowired
+	private ObjectMapper objectMapper;
 
 	@Override
 	@Transactional
@@ -44,7 +47,7 @@ public class UpdatePersonUC implements UpdatePerson {
 		PersonModel toReturn = personRepository.save(personMapper.modelToEntity(person));
 
 		try {
-			log.info("Sending message: {}", new ObjectMapper().writeValueAsString(person));
+			log.info("Sending message: {}", objectMapper.writeValueAsString(person));
 			rabbitTemplate.convertAndSend(personTopicExchange, personUpdateKey, person);
 			log.info("Message was sent successfully!");
 		} catch (Exception ex) {

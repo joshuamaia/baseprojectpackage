@@ -38,6 +38,9 @@ public class SavePersonUC implements SavePerson {
 
 	@Value("${app-config.rabbit.routingKey.person-create}")
 	private String personCreateKey;
+	
+	@Autowired
+	private ObjectMapper objectMapper;
 
 	@Override
 	@Transactional
@@ -45,7 +48,7 @@ public class SavePersonUC implements SavePerson {
 		PersonModel toReturn = personRepository.save(personMapper.modelToEntity(person));
 
 		try {
-			log.info("Sending message: {}", new ObjectMapper().writeValueAsString(person));
+			log.info("Sending message: {}", objectMapper.writeValueAsString(person));
 			person.setId(toReturn.getId());
 			person.getAddress().setId(toReturn.getAddress().getId());
 			rabbitTemplate.convertAndSend(personTopicExchange, personCreateKey, person);

@@ -17,22 +17,25 @@ public class PersonListener {
 
 	@Autowired
 	private PersonService personService;
+	
+	@Autowired
+	private ObjectMapper objectMapper;
 
 	@RabbitListener(queues = "${app-config.rabbit.queue.person-create}")
 	public void savePersonMessage(PersonRequest personRequest) throws JsonProcessingException {
-		log.info("Recieving message with data: {}", new ObjectMapper().writeValueAsString(personRequest));
+		log.info("Recieving message with data: {}", objectMapper.writeValueAsString(personRequest));
 		personService.save(personRequest);
 	}
 
 	@RabbitListener(queues = "${app-config.rabbit.queue.person-update}")
 	public void updatePersonMessage(PersonRequest personRequest) throws JsonProcessingException {
-		log.info("Recieving message with data: {}", new ObjectMapper().writeValueAsString(personRequest));
+		log.info("Recieving message with data: {}", objectMapper.writeValueAsString(personRequest));
 		personService.update(personRequest);
 	}
 
 	@RabbitListener(queues = "${app-config.rabbit.queue.person-delete}")
 	public void deletePersonMessage(Long idPerson) throws JsonProcessingException {
-		log.info("Recieving message with data: {}", new ObjectMapper().writeValueAsString(idPerson));
+		log.info("Recieving message with data: {}", objectMapper.writeValueAsString(idPerson));
 		personService.delete(idPerson);
 	}
 

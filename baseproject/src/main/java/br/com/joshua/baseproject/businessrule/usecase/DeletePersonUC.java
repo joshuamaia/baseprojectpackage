@@ -27,13 +27,16 @@ public class DeletePersonUC implements DeletePerson{
 
 	@Value("${app-config.rabbit.routingKey.person-delete}")
 	private String personDeleteKey;
+	
+	@Autowired
+	private ObjectMapper objectMapper;
 
 	@Override
 	@Transactional
 	public void deletePerson(Long id) {
 		personRepository.deleteById(id);
 		try {
-			log.info("Sending message: {}", new ObjectMapper().writeValueAsString(id));
+			log.info("Sending message: {}", objectMapper.writeValueAsString(id));
 			rabbitTemplate.convertAndSend(personTopicExchange, personDeleteKey, id);
 			log.info("Message was sent successfully!");
 		} catch (Exception ex) {
